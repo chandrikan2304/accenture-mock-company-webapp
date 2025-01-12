@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Starting the build process...'
+                sh './gradlew assemble'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                sh './gradlew test'
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Pipeline execution completed.'
+        }
+        success {
+            echo 'Build and tests completed successfully.'
+        }
+        failure {
+            echo 'Build or tests failed.'
+        }
+    }
+}
